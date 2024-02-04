@@ -2,7 +2,7 @@ ifdef CROSS_COMPILE
 	ifeq ($(CROSS_COMPILE), aarch64-none-linux-gnu-)
 		CC=aarch64-none-linux-gnu-gcc
 	else
-		CC=aarch64-none-linux-gnu-gcc
+		CC=gcc
 	endif
 else
 	CC=gcc

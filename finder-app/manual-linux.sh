@@ -13,9 +13,6 @@ FINDER_APP_DIR=$(realpath $(dirname $0))
 ARCH=arm64
 CROSS_COMPILE=aarch64-none-linux-gnu-
 
-apt-get install libssl-dev
-apt install qemu-system-arm
-
 if [ $# -lt 1 ]
 then
 	echo "Using default directory ${OUTDIR} for output"
@@ -37,7 +34,7 @@ if [ ! -e ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ]; then
     cd linux-stable
     echo "Checking out version ${KERNEL_VERSION}"
     git checkout ${KERNEL_VERSION}
-    git am assignment3-patch.patch
+    # git am assignment3-patch.patch
     # TODO: Add your kernel build steps here
 	make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} mrproper
 	make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} defconfig
@@ -77,8 +74,6 @@ else
 fi
 
 # TODO: Make and install busybox
-make  distclean
-make  defconfig
 make  ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE}
 make  CONFIG_PREFIX=${OUTDIR}/rootfs ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} install
 

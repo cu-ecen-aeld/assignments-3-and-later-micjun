@@ -34,7 +34,7 @@ if [ ! -e ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ]; then
     cd linux-stable
     echo "Checking out version ${KERNEL_VERSION}"
     git checkout ${KERNEL_VERSION}
-    git am /home/pandabubba/Documents/Boulder/assignment-2-micjun/assignment3-patch.patch
+    git am assignment3-patch.patch
     # TODO: Add your kernel build steps here
 	make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} mrproper
 	make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE}defconfig

@@ -8,7 +8,26 @@ set -u
 NUMFILES=10
 WRITESTR=AELD_IS_FUN
 WRITEDIR=/tmp/aeld-data
+
+BASE_DIR=$(realpath $(dirname $0))
+BIN_DIR=$BASE_DIR
+
+echo $BASE_DIR
+if [ $(basename $BASE_DIR) != "finder-app" ]; then
+        echo not called from finder-app, looking for conf in /etc/finder-app
+        # cd /etc/finder-app
+        BASE_DIR=/etc/finder-app
+fi
+
+cd $BASE_DIR
+
 username=$(cat conf/username.txt)
+
+if [ $(basename $BASE_DIR) != "finder-app" ]; then
+        BASE_DIR=/etc/finder-app
+fi
+
+cd $BASE_DIR
 
 if [ $# -lt 3 ]
 then
@@ -20,7 +39,7 @@ then
 		NUMFILES=$1
 	fi	
 else
-	NUMFILES=$1
+	NUMFILES=$1    
 	WRITESTR=$2
 	WRITEDIR=/tmp/aeld-data/$3
 fi
@@ -54,11 +73,11 @@ fi
 
 for i in $( seq 1 $NUMFILES)
 do
-	./writer "$WRITEDIR/${username}$i.txt" "$WRITESTR"
+	$BIN_DIR/writer "$WRITEDIR/${username}$i.txt" "$WRITESTR"
 done
 
-OUTPUTSTRING=$(./finder.sh "$WRITEDIR" "$WRITESTR")
-
+OUTPUTSTRING=$($BIN_DIR/finder.sh "$WRITEDIR" "$WRITESTR")
+echo $OUTPUTSTRING > /tmp/assignment4-result.txt
 # remove temporary directories
 rm -rf /tmp/aeld-data
 
